@@ -28,21 +28,16 @@ function onClickGallery(e) {
 	if (!e.target.classList.contains("gallery__image")) { return; }
 	const instance = basicLightbox.create(`
     <img src="${e.target.getAttribute('data-source')}" width="100%" height="100%">
-`);
+`, {
+		onShow: () => { document.addEventListener('keydown', onCloseEscape); }, onClose: () => { document.removeEventListener('keydown', onCloseEscape); }
+	});
 
 	function onCloseEscape(event) {
 		if (event.code === 'Escape') {
 			instance.close();
-			document.removeEventListener('keydown', onCloseEscape);
 		}
-
 	}
 	instance.show();
-	if (instance.show()) {
-		document.addEventListener('keydown', onCloseEscape);
-	}
-
-
 
 
 }
